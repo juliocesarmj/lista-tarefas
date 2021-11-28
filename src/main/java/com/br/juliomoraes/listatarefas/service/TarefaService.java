@@ -3,8 +3,10 @@ package com.br.juliomoraes.listatarefas.service;
 import com.br.juliomoraes.listatarefas.dao.ITarefaDAO;
 import com.br.juliomoraes.listatarefas.entidades.Tarefa;
 import com.br.juliomoraes.listatarefas.entidades.TarefaDTO;
+import com.br.juliomoraes.listatarefas.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -38,12 +40,12 @@ public class TarefaService implements ITarefaService {
     public void excluirTarefa(Long id) {
 
         try {
-            Tarefa tarefa = Optional.ofNullable(this.tarefaDAO.findById(id)).orElseThrow(RuntimeException::new).get();
+
+            Tarefa tarefa = this.consultarTarefa(id);
             this.tarefaDAO.delete(tarefa);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -62,6 +64,7 @@ public class TarefaService implements ITarefaService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<TarefaDTO> tarefas() {
 
@@ -73,12 +76,25 @@ public class TarefaService implements ITarefaService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public TarefaDTO tarefa(Long id) {
+        try {
+            Optional<Tarefa> obj = this.tarefaDAO.findById(id);
+            Tarefa tarefa = obj.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado"));
+            return new TarefaDTO(tarefa);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Tarefa consultarTarefa(Long id) {
 
         try {
-            Tarefa tarefa = Optional.ofNullable(this.tarefaDAO.findById(id)).orElseThrow(RuntimeException::new).get();
-            return new TarefaDTO(tarefa);
+            Optional<Tarefa> obj = this.tarefaDAO.findById(id);
+            return obj.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado"));
         } catch (Exception e) {
             return null;
         }
