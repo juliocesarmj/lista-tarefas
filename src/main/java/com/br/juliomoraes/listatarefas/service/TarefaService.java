@@ -2,7 +2,7 @@ package com.br.juliomoraes.listatarefas.service;
 
 import com.br.juliomoraes.listatarefas.dao.ITarefaDAO;
 import com.br.juliomoraes.listatarefas.entidades.Tarefa;
-import com.br.juliomoraes.listatarefas.entidades.TarefaDTO;
+import com.br.juliomoraes.listatarefas.dto.TarefaDTO;
 import com.br.juliomoraes.listatarefas.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

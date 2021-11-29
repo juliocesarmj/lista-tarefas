@@ -1,5 +1,6 @@
-package com.br.juliomoraes.listatarefas.entidades;
+package com.br.juliomoraes.listatarefas.dto;
 
+import com.br.juliomoraes.listatarefas.entidades.Tarefa;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

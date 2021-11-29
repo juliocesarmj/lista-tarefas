@@ -1,7 +1,7 @@
 package com.br.juliomoraes.listatarefas.service;
 
 import com.br.juliomoraes.listatarefas.entidades.Tarefa;
-import com.br.juliomoraes.listatarefas.entidades.TarefaDTO;
+import com.br.juliomoraes.listatarefas.dto.TarefaDTO;
 
 import java.util.List;
 
